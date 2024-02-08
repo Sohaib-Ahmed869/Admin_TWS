@@ -9,9 +9,32 @@ const AdminAddProduct = ({ product, addProduct }) => {
     const [status, setStatus] = React.useState("");
     const [image, setImage] = React.useState("");
 
-    const handleSubmit = (e) => {
+    const convertBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+
+            reader.onload = () => {
+                resolve(reader.result.split(',')[1]);
+            };
+
+            reader.onerror = (error) => {
+                reject(error);
+            };
+
+            reader.readAsDataURL(file);
+        });
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        addProduct(name, description, price, category, status, image);
+        const fileInput = document.getElementById('image');
+        const file = fileInput.files[0];
+        if(file === undefined) {
+            alert("Please select a file");
+            return;
+        }
+        const base64 = await convertBase64(file);
+        addProduct(name, description, price, category, status, base64);
         setName("");
         setDescription("");
         setPrice("");

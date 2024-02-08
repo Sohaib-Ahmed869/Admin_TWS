@@ -2,7 +2,7 @@ import React from "react";
 
 import "./Admin-Product-view.css";
 
-const AdminProductView = ({ products , DeactivateProduct}) => {
+const AdminProductView = ({ products, DeactivateProduct }) => {
     return (
         <div className="prod-view">
             <table>
@@ -19,18 +19,26 @@ const AdminProductView = ({ products , DeactivateProduct}) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {products.map((product) => (
-                        <tr key={product.Name}>
-                            <td><img src={product.Image} alt={product.Name} /></td>
-                            <td>{product.Name}</td>
-                            <td>{product.Description}</td>
-                            <td>{product.Price}</td>
-                            <td>{product.Category}</td>
-                            <td>{product.Status}</td>
-                            <td><button className="prod-delete" onClick={() => DeactivateProduct(product.Name)}>{product.Status === "Inactive" ? "Activate" : "Deactivate"}</button></td>
-                            <td><button className="prod-edit">Edit</button></td>
-                        </tr>
-                    ))}
+                    {products &&
+                        products.map((product, index) => (
+                            <tr key={index}>
+                                <td>
+                                    <img
+                                        key={index}
+                                        src={`data:${product.Image.contentType};base64,${product.Image.data.data}`}
+                                        alt={`Product ${index + 1}`}
+                                        style={{ maxWidth: '50px', maxHeight: '50px', margin: '5px' }}
+                                    />
+                                </td>
+                                <td>{product.Name}</td>
+                                <td>{product.Description}</td>
+                                <td>{product.Price}</td>
+                                <td>{product.Category}</td>
+                                <td>{product.Status}</td>
+                                <td><button className="prod-delete" onClick={() => DeactivateProduct(product.Name)}>{product.Status === "Inactive" ? "Activate" : "Deactivate"}</button></td>
+                                <td><button className="prod-edit">Edit</button></td>
+                            </tr>
+                        ))}
                 </tbody>
             </table>
         </div>

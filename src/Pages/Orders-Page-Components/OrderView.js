@@ -18,7 +18,7 @@ function OrderView(orders) {
                                 <h1>Order Total: {order.Grand_Total}/-</h1>
                             </div>
                             <div className="right">
-                               
+
                                 <h1
                                     className={order.Status === "Delivered" ? "order-delivered" : order.Status === "Unconfirmed" ? "order-unconfirmed" : order.Status === "Confirmed" ? "order-confirmed" : order.Status === "In Kitchen" ? "order-kitchen" : "order-delivering"}
                                 >Status: {order.Status}</h1>
